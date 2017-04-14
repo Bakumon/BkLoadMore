@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Library</string>
+    <string name="bk_load_more_no_more_data">没有更多数据了</string>
+    <string name="bk_load_more_loading">加载中....</string>
+</resources>
