@@ -1,6 +1,8 @@
 
 # BKLoadMore
 
+Modified from [Paginate](https://github.com/MarkoMilos/Paginate), the extension is in addition to displaying the rows that have finished loading all the data.
+
 ## Features
 
 - API is simple and flexible
@@ -96,10 +98,6 @@ public class CustomerNoMoreDataItem implements NoMoreDataItem {
     }
 }
 ```
-
-## Thanks
-
-Thanks [Paginate](https://github.com/MarkoMilos/Paginate)
 
 ## About me
 
