@@ -44,15 +44,15 @@ public class MainActivity extends AppCompatActivity implements BKLoadMore.Callba
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         list = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             list.add("text" + i);
         }
         adapter = new MyAdapter(this, list);
         mRecyclerView.setAdapter(adapter);
 
         BKLoadMore.with(mRecyclerView)
-                .setLoadingItem(new CustomerLoadingItem())
-                .setNoMoreDataItem(new CustomerNoMoreDataItem())
+//                .setLoadingItem(new CustomerLoadingItem())
+//                .setNoMoreDataItem(new CustomerNoMoreDataItem())
                 .callBack(this);
 
 
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements BKLoadMore.Callba
     @Override
     public void onLoadMore() {
         isLoading = true;
-        handler.postDelayed(fakeCallback, 2000);
+        handler.postDelayed(fakeCallback, 1500);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements BKLoadMore.Callba
 
     @Override
     public boolean isLastPage() {
-        return page == 10;
+        return page == 3;
     }
 
     private int page = 0;
@@ -84,7 +84,9 @@ public class MainActivity extends AppCompatActivity implements BKLoadMore.Callba
             page++;
             int start = adapter.mData.size();
             adapter.mData.add("add" + page);
-            adapter.notifyItemRangeInserted(start, 1);
+            adapter.mData.add("add" + page);
+            adapter.mData.add("add" + page);
+            adapter.notifyItemRangeInserted(start, 3);
             isLoading = false;
         }
     };
