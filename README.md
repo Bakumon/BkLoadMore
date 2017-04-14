@@ -22,7 +22,11 @@ Use the default implementation to start quickly
 ```java
 BKLoadMore.with(mRecyclerView)
           .callBack(this);
+```
 
+Implement the CallBacks interface to control paging action.
+
+```java
 @Override
 public void onLoadMore() {
     // Load next page of data (e.g. network or database)
