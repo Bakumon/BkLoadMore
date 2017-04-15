@@ -6,6 +6,7 @@ Modified from [Paginate](https://github.com/MarkoMilos/Paginate), the extension 
 ## Features
 
 - API is simple and flexible
+- No immersion implementation
 - Custom loading & no more data list item
 - Support RecyclerView (using linear, grid and staggered LayoutManager)
 
