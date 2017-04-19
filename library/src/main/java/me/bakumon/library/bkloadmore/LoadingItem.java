@@ -25,15 +25,28 @@ import me.bakumon.library.R;
 
 
 /**
- * 正在加载中的 Item,并且提供了默认的实现
+ * Create a line that indicates that it is loading.
  * Created by Bakumon on 2017/4/13 17:00.
  */
 public interface LoadingItem {
-
+    /**
+     * Create new loading list item {@link android.support.v7.widget.RecyclerView.ViewHolder}.
+     * @param parent parent ViewGroup.
+     * @param viewType viewType type of the loading list item.
+     * @return ViewHolder that will be used as loading list item.
+     */
     RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType);
 
+    /**
+     * Bind the loading list item.
+     * @param holder loading list item ViewHolder.
+     * @param position position loading list item position.
+     */
     void onBindViewHolder(RecyclerView.ViewHolder holder, int position);
 
+    /**
+     * Create a default implementation for LoadingItem.
+     */
     LoadingItem DEFAULT = new LoadingItem() {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -44,7 +57,7 @@ public interface LoadingItem {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+            // No binding for default loading row
         }
     };
 }

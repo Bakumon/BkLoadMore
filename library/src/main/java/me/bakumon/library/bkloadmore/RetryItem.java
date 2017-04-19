@@ -21,22 +21,45 @@ import android.view.ViewGroup;
 
 
 /**
- * 正在加载中的 Item,并且提供了默认的实现
+ * Create a line that indicates that it is failed to load.
  * Created by Bakumon on 2017/4/13 17:00.
  */
 public abstract class RetryItem {
+    /**
+     * Create new loading list item {@link android.support.v7.widget.RecyclerView.ViewHolder}.
+     *
+     * @param parent   parent ViewGroup.
+     * @param viewType viewType type of the loading list item.
+     * @return ViewHolder that will be used as loading list item.
+     */
+    public abstract RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType);
 
-    abstract RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType);
+    /**
+     * Bind the loading list item.
+     *
+     * @param holder   loading list item ViewHolder.
+     * @param position position loading list item position.
+     */
+    public abstract void onBindViewHolder(RecyclerView.ViewHolder holder, int position);
 
-    abstract void onBindViewHolder(RecyclerView.ViewHolder holder, int position);
+    /**
+     * Listener used to dispatch the retry item click events.
+     */
+    public OnRetryItemClickListener listener;
 
-    protected OnRetryItemClickListener listener;
-
-    void setOnRetryItemClickListener(OnRetryItemClickListener listener){
+    /**
+     * Register a callback to be invoked when this the retry item is clicked.
+     *
+     * @param listener The callback that will run
+     */
+    public void setOnRetryItemClickListener(OnRetryItemClickListener listener) {
         this.listener = listener;
     }
 
-    interface OnRetryItemClickListener {
+    /**
+     * Interface definition for a callback to be invoked when the retry item is clicked.
+     */
+    public interface OnRetryItemClickListener {
         void onRetryItemClick();
     }
 

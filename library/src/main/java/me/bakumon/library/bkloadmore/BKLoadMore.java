@@ -36,13 +36,31 @@ public abstract class BKLoadMore {
         void onRetry();
     }
 
+    /**
+     * Create load more functionality upon RecyclerView.
+     *
+     * @param recyclerView RecyclerView that will have load more functionality.
+     * @param callback     load more callbacks
+     * @return {@link me.bakumon.library.bkloadmore.BKLoadMore.Callbacks}
+     */
     public static BKLoadMoreImpl.Builder with(RecyclerView recyclerView, Callbacks callback) {
         return new BKLoadMoreImpl.Builder(recyclerView, callback);
     }
 
+    /**
+     * Called to check if there is more data (more pages) to load.
+     *
+     * @param isLastPage Whether it is the last page.
+     */
     public abstract void setIsLastPage(boolean isLastPage);
 
+    /**
+     * This method is called when the data has been loaded.
+     */
     public abstract void completedLoadMore();
 
+    /**
+     * This method is called when data loading fails.
+     */
     public abstract void loadMoreFail();
 }
