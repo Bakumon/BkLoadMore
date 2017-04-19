@@ -28,19 +28,25 @@ class WrapperAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int VIEW_TYPE_LOADING = Integer.MIN_VALUE + 1;
     private static final int VIEW_TYPE_NO_DATA = Integer.MIN_VALUE + 2;
+    private static final int VIEW_TYPE_RETRY = Integer.MIN_VALUE + 3;
 
     private final RecyclerView.Adapter<RecyclerView.ViewHolder> wrappedAdapter;
     private final LoadingItem loadingListItem;
     private final NoMoreDataItem noMoreDataItem;
+    private final RetryItem retryItem;
     private boolean displayLoadingRow = true;
     private boolean displayNoMoreDataRow = false;
+    private boolean displayRetryRow = false;
 
     WrapperAdapter(RecyclerView.Adapter<RecyclerView.ViewHolder> adapter,
-                          LoadingItem loadingListItem,
-                          NoMoreDataItem noMoreDataItem) {
+                   LoadingItem loadingListItem,
+                   NoMoreDataItem noMoreDataItem,
+                   RetryItem retryItem) {
         this.wrappedAdapter = adapter;
         this.loadingListItem = loadingListItem;
         this.noMoreDataItem = noMoreDataItem;
+        this.retryItem = retryItem;
+
     }
 
     @Override
@@ -49,6 +55,8 @@ class WrapperAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return loadingListItem.onCreateViewHolder(parent, viewType);
         } else if (viewType == VIEW_TYPE_NO_DATA) {
             return noMoreDataItem.onCreateViewHolder(parent, viewType);
+        } else if (viewType == VIEW_TYPE_RETRY) {
+            return retryItem.onCreateViewHolder(parent, viewType);
         }
         return wrappedAdapter.onCreateViewHolder(parent, viewType);
     }
@@ -60,6 +68,8 @@ class WrapperAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             viewType = VIEW_TYPE_LOADING;
         } else if (isNoMoreDataRow(position)) {
             viewType = VIEW_TYPE_NO_DATA;
+        } else if (isRetryRow(position)) {
+            viewType = VIEW_TYPE_RETRY;
         }
         return viewType;
     }
@@ -70,6 +80,8 @@ class WrapperAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             loadingListItem.onBindViewHolder(holder, position);
         } else if (isNoMoreDataRow(position)) {
             noMoreDataItem.onBindViewHolder(holder, position);
+        } else if (isRetryRow(position)) {
+            retryItem.onBindViewHolder(holder, position);
         } else {
             wrappedAdapter.onBindViewHolder(holder, position);
         }
@@ -77,13 +89,15 @@ class WrapperAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public long getItemId(int position) {
-        return isLoadingRow(position) || isNoMoreDataRow(position) ? RecyclerView.NO_ID : wrappedAdapter.getItemId(position);
+        return isLoadingRow(position) || isNoMoreDataRow(position) || isRetryRow(position)
+                ? RecyclerView.NO_ID : wrappedAdapter.getItemId(position);
     }
 
     @Override
     public int getItemCount() {
         int count = wrappedAdapter.getItemCount();
-        return displayLoadingRow || displayNoMoreDataRow ? count + 1 : count;
+        return displayLoadingRow || displayNoMoreDataRow || displayRetryRow
+                ? count + 1 : count;
     }
 
     @Override
@@ -109,6 +123,14 @@ class WrapperAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     /**
+     * 此行是否是加载失败行
+     */
+    private boolean isRetryRow(int position) {
+        int retryPositionRow = displayRetryRow ? getItemCount() - 1 : -1;
+        return displayRetryRow && position == retryPositionRow;
+    }
+
+    /**
      * 显示加载中行
      */
     void displayLoadingRow(boolean displayLoadingRow) {
@@ -120,6 +142,13 @@ class WrapperAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
      */
     void displayNoMoreDataRow(boolean displayNoMoreDataRow) {
         this.displayNoMoreDataRow = displayNoMoreDataRow;
+    }
+
+    /**
+     * 显示加载失败行
+     */
+    void displayRetryRow(boolean displayRetryRow) {
+        this.displayRetryRow = displayRetryRow;
     }
 
 }

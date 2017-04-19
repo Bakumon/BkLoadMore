@@ -27,54 +27,44 @@ import java.util.List;
 
 import me.bakumon.bkloadmore.adapter.MyAdapter;
 import me.bakumon.library.bkloadmore.BKLoadMore;
+import me.bakumon.library.bkloadmore.BKLoadMoreImpl;
 
-public class MainActivity extends AppCompatActivity implements BKLoadMore.Callbacks {
+public class MainActivity extends AppCompatActivity implements BKLoadMoreImpl.Callbacks {
 
-    private RecyclerView mRecyclerView;
-    private List<String> list;
     private MyAdapter adapter;
+
+    private BKLoadMore mBKLoadMore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         handler = new Handler();
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        list = new ArrayList<>();
+        List<String> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             list.add("text" + i);
         }
         adapter = new MyAdapter(this, list);
-        mRecyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
 
-        BKLoadMore.with(mRecyclerView)
-//                .setLoadingItem(new CustomerLoadingItem())
-//                .setNoMoreDataItem(new CustomerNoMoreDataItem())
-                .callBack(this);
-
+        mBKLoadMore = BKLoadMoreImpl.with(recyclerView, this).build();
 
     }
 
-    boolean isLoading;
     private Handler handler;
 
     @Override
     public void onLoadMore() {
-        isLoading = true;
         handler.postDelayed(fakeCallback, 1500);
     }
 
     @Override
-    public boolean isLoading() {
-        return isLoading;
-    }
-
-    @Override
-    public boolean isLastPage() {
-        return page == 3;
+    public void onRetry() {
+        handler.postDelayed(retryCallback, 1500);
     }
 
     private int page = 0;
@@ -82,12 +72,30 @@ public class MainActivity extends AppCompatActivity implements BKLoadMore.Callba
         @Override
         public void run() {
             page++;
+            if (page != 3) {
+                int start = adapter.mData.size();
+                adapter.mData.add("add" + page);
+                adapter.mData.add("add" + page);
+                adapter.mData.add("add" + page);
+                adapter.notifyItemRangeInserted(start, 3);
+            } else {
+                mBKLoadMore.loadMoreFail();
+                adapter.notifyDataSetChanged();
+            }
+            mBKLoadMore.completedLoadMore();
+            mBKLoadMore.setIsLastPage(page == 5);
+
+        }
+    };
+    private Runnable retryCallback = new Runnable() {
+        @Override
+        public void run() {
             int start = adapter.mData.size();
             adapter.mData.add("add" + page);
             adapter.mData.add("add" + page);
             adapter.mData.add("add" + page);
             adapter.notifyItemRangeInserted(start, 3);
-            isLoading = false;
+            mBKLoadMore.completedLoadMore();
         }
     };
 }

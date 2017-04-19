@@ -17,32 +17,27 @@
 package me.bakumon.library.bkloadmore;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.ViewGroup;
+
 
 /**
- * BKLoadMore
- * Created by Bakumon on 2017/4/19 16:12.
+ * 正在加载中的 Item,并且提供了默认的实现
+ * Created by Bakumon on 2017/4/13 17:00.
  */
-public abstract class BKLoadMore {
-    public interface Callbacks {
+public abstract class RetryItem {
 
-        /**
-         * Called when next page of data needs to be loaded.
-         */
-        void onLoadMore();
+    abstract RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType);
 
-        /**
-         * Called when the next page of data needs to be reloaded.
-         */
-        void onRetry();
+    abstract void onBindViewHolder(RecyclerView.ViewHolder holder, int position);
+
+    protected OnRetryItemClickListener listener;
+
+    void setOnRetryItemClickListener(OnRetryItemClickListener listener){
+        this.listener = listener;
     }
 
-    public static BKLoadMoreImpl.Builder with(RecyclerView recyclerView, Callbacks callback) {
-        return new BKLoadMoreImpl.Builder(recyclerView, callback);
+    interface OnRetryItemClickListener {
+        void onRetryItemClick();
     }
 
-    public abstract void setIsLastPage(boolean isLastPage);
-
-    public abstract void completedLoadMore();
-
-    public abstract void loadMoreFail();
 }
