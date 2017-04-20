@@ -12,7 +12,7 @@ Modified from [Paginate](https://github.com/MarkoMilos/Paginate), the extension 
 
 ## Preview
 
-![BKLoadMore.gif](https://github.com/Bakumon/BkLoadMore/raw/master/art/BKLoadMore.gif)
+![BKLoadMore.gif](https://github.com/Bakumon/BkLoadMore/raw/master/art/demo.gif)
 
 ## Setup
 
