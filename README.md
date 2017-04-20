@@ -60,10 +60,10 @@ mBKLoadMore.loadMoreFail();
 ## Customize
 
 ```java
-BKLoadMore.with(mRecyclerView)
-          .setLoadingItem(new CustomerLoadingItem())
-          .setNoMoreDataItem(new CustomerNoMoreDataItem())
-          .callBack(this);
+mBKLoadMore = BKLoadMoreImpl.with(recyclerView, this)
+                            .setLoadingItem(new CustomerLoadingItem())
+                            .setNoMoreDataItem(new CustomerNoMoreDataItem())
+                            .build();
 ```
 
 Implement the LoadingItem interface to customize the loading line.
