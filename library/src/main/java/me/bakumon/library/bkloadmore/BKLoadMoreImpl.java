@@ -175,7 +175,10 @@ public class BKLoadMoreImpl extends BKLoadMore implements RetryItem.OnRetryItemC
     @Override
     public void loadMoreFail() {
         isLoadMoreFail = true;
-
+        wrapperAdapter.displayLoadingRow(false);
+        wrapperAdapter.displayNoMoreDataRow(false);
+        wrapperAdapter.displayRetryRow(true);
+        wrapperAdapter.notifyItemChanged(wrapperAdapter.getItemCount() - 1);
     }
 
     @Override

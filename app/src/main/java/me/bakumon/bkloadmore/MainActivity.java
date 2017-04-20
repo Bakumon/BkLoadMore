@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity implements BKLoadMoreImpl.Ca
                 adapter.notifyItemRangeInserted(start, 3);
             } else {
                 mBKLoadMore.loadMoreFail();
-                adapter.notifyDataSetChanged();
             }
             mBKLoadMore.completedLoadMore();
             mBKLoadMore.setIsLastPage(page == 5);

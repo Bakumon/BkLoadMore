@@ -1,5 +1,5 @@
 
-# BKLoadMore
+# BKLoadMore(non-invasive)
 
 Modified from [Paginate](https://github.com/MarkoMilos/Paginate), the extension is in addition to displaying the rows that have finished loading all the data.
 
@@ -20,11 +20,10 @@ TODO JCenter
 
 ## Usage
 
-Use the default implementation to start quickly
+Use the default implementation to start quickly.
 
 ```java
-BKLoadMore.with(mRecyclerView)
-          .callBack(this);
+BKLoadMore mBKLoadMore = BKLoadMoreImpl.with(recyclerView, this).build();
 ```
 
 Implement the CallBacks interface to control paging action.
@@ -32,21 +31,28 @@ Implement the CallBacks interface to control paging action.
 ```java
 @Override
 public void onLoadMore() {
-    // Load next page of data (e.g. network or database)
+    // Called when next page of data needs to be loaded.
+    handler.postDelayed(fakeCallback, 1500);
 }
 
 @Override
-public boolean isLoading() {
-    // Indicate whether new page loading is in progress or not
-    return isLoading;
+public void onRetry() {
+    // Called when the next page of data needs to be reloaded.
+    handler.postDelayed(retryCallback, 1500);
 }
+```
 
-@Override
-public boolean isLastPage() {
-    // Indicate whether all data (pages) are loaded or not
-    return isLastPage;
-}
+Call the following method at the appropriate time, see the note for details.
 
+```java
+// Called to check if there is more data (more pages) to load.
+mBKLoadMore.setIsLastPage(isLastPage);
+
+// This method is called when the data has been loaded.
+mBKLoadMore.completedLoadMore();
+
+// This method is called when data loading fails.It will show the load failed line.
+mBKLoadMore.loadMoreFail();
 ```
 
 **Note:** `LayoutManager` and `RecyclerView.Adapter` needs to be set before calling the code above.
@@ -99,6 +105,8 @@ public class CustomerNoMoreDataItem implements NoMoreDataItem {
     }
 }
 ```
+
+For details, please refer to [demo](https://github.com/Bakumon/BkLoadMore/tree/master/app).
 
 ## About me
 
