@@ -19,8 +19,10 @@ package me.bakumon.bkloadmore;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,10 +44,12 @@ public class MainActivity extends AppCompatActivity implements BKLoadMoreImpl.Ca
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         handler = new Handler();
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
+//        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         List<String> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             list.add("text" + i);
         }
         adapter = new MyAdapter(this, list);

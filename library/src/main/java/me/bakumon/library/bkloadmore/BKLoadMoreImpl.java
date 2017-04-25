@@ -126,7 +126,7 @@ public class BKLoadMoreImpl extends BKLoadMore implements RetryItem.OnRetryItemC
     }
 
     private void onAdapterDataChanged() {
-        displayRow();
+//        displayRow();
         checkEndOffset();
     }
 
