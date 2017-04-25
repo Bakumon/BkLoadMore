@@ -126,7 +126,6 @@ public class BKLoadMoreImpl extends BKLoadMore implements RetryItem.OnRetryItemC
     }
 
     private void onAdapterDataChanged() {
-//        displayRow();
         checkEndOffset();
     }
 
@@ -165,6 +164,11 @@ public class BKLoadMoreImpl extends BKLoadMore implements RetryItem.OnRetryItemC
     @Override
     public void setIsLastPage(boolean isLastPage) {
         this.isLastPage = isLastPage;
+        if (isLastPage) {
+            wrapperAdapter.displayLoadingRow(false);
+            wrapperAdapter.displayNoMoreDataRow(true);
+            wrapperAdapter.displayRetryRow(false);
+        }
     }
 
     @Override

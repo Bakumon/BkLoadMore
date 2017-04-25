@@ -125,7 +125,7 @@ class WrapperAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     /**
      * 此行是否是加载失败行
      */
-    private boolean isRetryRow(int position) {
+    boolean isRetryRow(int position) {
         int retryPositionRow = displayRetryRow ? getItemCount() - 1 : -1;
         return displayRetryRow && position == retryPositionRow;
     }

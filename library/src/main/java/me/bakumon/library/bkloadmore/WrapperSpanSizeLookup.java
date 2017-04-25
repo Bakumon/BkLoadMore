@@ -35,7 +35,8 @@ class WrapperSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
 
     @Override
     public int getSpanSize(int position) {
-        if (wrapperAdapter.isLoadingRow(position) || wrapperAdapter.isNoMoreDataRow(position)) {
+        if (wrapperAdapter.isLoadingRow(position) || wrapperAdapter.isNoMoreDataRow(position)
+                || wrapperAdapter.isRetryRow(position)) {
             return itemSpanLookup.getSpanSize();
         } else {
             return wrappedSpanSizeLookup.getSpanSize(position);

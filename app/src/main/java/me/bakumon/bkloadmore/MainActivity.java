@@ -45,11 +45,11 @@ public class MainActivity extends AppCompatActivity implements BKLoadMoreImpl.Ca
         handler = new Handler();
 
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
-//        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+//        recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         List<String> list = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 10; i++) {
             list.add("text" + i);
         }
         adapter = new MyAdapter(this, list);
