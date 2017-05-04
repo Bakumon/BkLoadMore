@@ -47,11 +47,13 @@ class DefaultRetryItem extends RetryItem {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mCallbacks != null) {
-                    mCallbacks.onRetry();
-                }
-                if (listener != null) {
-                    listener.onRetryItemClick();
+                if (!NoDoubleClickUtils.isDoubleClick()) {
+                    if (mCallbacks != null) {
+                        mCallbacks.onRetry();
+                    }
+                    if (listener != null) {
+                        listener.onRetryItemClick();
+                    }
                 }
             }
         });
